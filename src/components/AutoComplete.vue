@@ -39,7 +39,6 @@ export default {
     };
   },
   setup(props) {
-    const dirty = ref(false);
     let search = ref(null);
     const { counter, increment, decrement, reset } = useAutoComplete();
     const { validateCountryField, errors } = useFormValidation();
@@ -48,12 +47,8 @@ export default {
     const filterResult = () => {
       filterResults(search.value);
     };
-    const validateInput = (e) => {
-      if (!dirty.value && e !== "blur") {
-        return;
-      }
+    const validateInput = () => {
       validateCountryField("country", search.value, props.items);
-      dirty.value = true;
     };
     return {
       search,
