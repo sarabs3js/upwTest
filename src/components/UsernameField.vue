@@ -7,7 +7,7 @@
       v-model="input"
       @input="$emit('update:modelValue', $event.target.value)"
       @keyup="validateInput"
-      @blue="validateInput"
+      @blur="validateInput"
     />
     <span v-if="errors.username" class="errorMessage">{{
       errors.username
@@ -19,12 +19,17 @@ import { ref } from "vue";
 import useFormValidation from "@/modules/useFormValidation";
 export default {
   setup() {
-    let input = ref(null);
+    const dirty = ref(false);
+    const input = ref(null);
     const { validateNameField, errors } = useFormValidation();
-    const validateInput = () => {
+    const validateInput = (e) => {
+      if (!dirty.value && e.type !== "blur") {
+        return;
+      }
       validateNameField("username", input.value);
+      dirty.value = true;
     };
-    return { input, errors, validateInput };
+    return { input, errors, validateInput, dirty };
   },
 };
 </script>

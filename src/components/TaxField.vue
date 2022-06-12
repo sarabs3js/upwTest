@@ -7,7 +7,7 @@
       v-model="tax"
       @input="$emit('update:modelValue', $event.target.value)"
       @keyup="validateInput"
-      @blue="validateInput"
+      @blur="validateInput"
     />
     <span v-if="errors.tax" class="errorMessage">{{ errors.tax }}</span>
   </div>
@@ -18,10 +18,15 @@ import { ref } from "vue";
 import useFormValidation from "@/modules/useFormValidation";
 export default {
   setup(props) {
+    const dirty = ref(false);
     let tax = ref(null);
     const { validateTaxField, errors } = useFormValidation();
-    const validateInput = () => {
+    const validateInput = (e) => {
+      if (!dirty.value && e.type !== "blur") {
+        return;
+      }
       validateTaxField("tax", tax.value, props.country);
+      dirty.value = true;
     };
     return { tax, errors, validateInput };
   },
