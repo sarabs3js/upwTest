@@ -24,14 +24,13 @@ describe("Register Form", () => {
   describe("Username field", () => {
     it("Should show error if username not filled", () => {
       cy.visit("http://localhost:3000");
-      cy.get("button").click();
-      cy.contains("Username is required").should("be.visible");
+      cy.get("input[name='username']").type("Sa").clear();
+      cy.contains("The username field is required").should("be.visible");
     });
     it("Should show error if username is less than 2 characters", () => {
       cy.visit("http://localhost:3000");
       cy.get("input[name='username']").type("Sa");
-      cy.get("button").click();
-      cy.contains("This field should be at least 3 characters long").should(
+      cy.contains("The username field must be atleast 3 characters long").should(
         "be.visible"
       );
     });
@@ -39,29 +38,27 @@ describe("Register Form", () => {
   describe("Country field", () => {
     it("Should show error if country not filled", () => {
       cy.visit("http://localhost:3000");
-      cy.get("button").click();
-      cy.contains("Country is required.").should("be.visible");
+      cy.get("input[name='country']").type("Test").clear();
+      cy.contains("The country field is required").should("be.visible");
     });
     it("Should show error if valid country not selected", () => {
       cy.visit("http://localhost:3000");
       cy.get("input[name='country']").type("Test");
       cy.get("body").click();
-      cy.get("#submitButton").click();
-      cy.contains("Select a valid country").should("be.visible");
+      cy.contains("Please select a valid country.").should("be.visible");
     });
   });
   describe("TAX field", () => {
     it("Should show error if Tax not filled", () => {
       cy.visit("http://localhost:3000");
-      cy.get("button").click();
-      cy.contains("Tax is required.").should("be.visible");
+      cy.get("input[name='tax']").type("Sa").clear();
+      cy.contains("The tax field is required").should("be.visible");
     });
     it("Should show error if tax field is invalid", () => {
       cy.visit("http://localhost:3000");
       cy.get("input[name='tax']").type("Sa");
       cy.get("body").click();
-      cy.get("#submitButton").click();
-      cy.contains("Tax number is not validated.").should("be.visible");
+      cy.contains("tax number is not valid.").should("be.visible");
     });
   });
 });
