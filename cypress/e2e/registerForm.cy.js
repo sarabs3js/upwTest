@@ -29,12 +29,12 @@ describe("Register Form", () => {
   describe("TAX field", () => {
     it("Should show error if Tax not filled", () => {
       cy.visit("http://localhost:3000");
-      cy.get("input[name='tax']").type("Sa").clear();
+      cy.get("input[name='tax']").focus("").clear();
       cy.contains("The tax field is required").should("be.visible");
     });
     it("Should show error if tax field is invalid", () => {
       cy.visit("http://localhost:3000");
-      cy.get("input[name='tax']").type("Sa");
+      cy.get("input[name='tax']").type("Sa").blur();
       cy.get("body").click();
       cy.contains("tax number is not valid.").should("be.visible");
     });
