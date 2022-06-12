@@ -41,9 +41,7 @@ label {
   font-size: 0.75rem;
   font-weight: 700;
 }
-input,
-select,
-.submitButton {
+input {
   display: block;
   width: 100%;
   border: 1px solid #ddd;

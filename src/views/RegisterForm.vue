@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent>
+  <form @submit.prevent ref="submitForm">
     <h3>Register Form</h3>
     <NotificationMessage
       message="Error in submitting the form"
@@ -56,25 +56,34 @@ export default {
     const { errors } = useFormValidation();
     const { isButtonDisabled } = useSubmitButton(fields, errors);
 
-    const submitForm = async () => {
-      const response = await registerForm(fields);
-      if (!response.status) {
-        error.value = true;
-        success.value = false;
-        loading.value = false;
-        return;
-      }
-      error.value = false;
-      success.value = true;
-      loading.value = false;
-      resetForm();
+    return {
+      fields,
+      isButtonDisabled,
+      error,
+      success,
+      resetForm,
+      loading,
     };
-    return { fields, submitForm, isButtonDisabled, error, success };
   },
   data() {
     return {
       countriesList: countriesList,
     };
+  },
+  methods: {
+    submitForm: async function () {
+      const response = await registerForm(this.fields);
+      if (!response.status) {
+        this.error = true;
+        this.success = false;
+        this.loading = false;
+        return;
+      }
+      this.error = false;
+      this.success = true;
+      this.loading = false;
+      this.$refs.submitForm.reset();
+    },
   },
 };
 </script>

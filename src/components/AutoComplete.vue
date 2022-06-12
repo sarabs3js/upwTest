@@ -5,10 +5,11 @@
       class="input"
       type="text"
       name="country"
+      autocomplete="off"
       @input="onChange"
       v-model="search"
-      @keydown.down="onArrowDown"
-      @keydown.up="onArrowUp"
+      @keydown.down="increment"
+      @keydown.up="decrement"
       @keydown.enter="onEnter"
     />
     <span v-if="errors.country" class="errorMessage">{{ errors.country }}</span>
@@ -18,7 +19,7 @@
         :key="result.code"
         @click="setResult(result)"
         class="autocomplete-result"
-        :class="{ 'is-active': i === arrowCounter }"
+        :class="{ 'is-active': i === counter }"
       >
         {{ result.name }}
       </li>
@@ -29,21 +30,37 @@
 <script>
 import { ref } from "vue";
 import useFormValidation from "@/modules/useFormValidation";
+import useAutoComplete from "@/modules/useAutoComplete";
+import useSearchResults from "@/modules/useSearchResults";
 export default {
   data() {
     return {
       isOpen: false,
-      results: [],
-      arrowCounter: 0,
     };
   },
   setup(props) {
     let search = ref(null);
+    const { counter, increment, decrement, reset } = useAutoComplete();
     const { validateCountryField, errors } = useFormValidation();
+    const { results, filterResults } = useSearchResults(props.items);
+
+    const filterResult = () => {
+      filterResults(search.value);
+    };
     const validateInput = () => {
       validateCountryField("country", search.value, props.items);
     };
-    return { search, errors, validateInput };
+    return {
+      search,
+      errors,
+      validateInput,
+      counter,
+      increment,
+      decrement,
+      results,
+      filterResult,
+      reset,
+    };
   },
   name: "AutoComplete",
   props: {
@@ -66,38 +83,23 @@ export default {
       this.$emit("update:modelValue", this.search);
       this.validateInput();
     },
-    filterResults() {
-      this.results = this.items.filter((item) => {
-        return item.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1;
-      });
-    },
     onChange() {
       this.$emit("update:modelValue", this.search);
       this.validateInput();
 
-      this.filterResults();
+      this.filterResult();
       this.isOpen = true;
     },
     handleClickOutside(event) {
       if (!this.$el.contains(event.target)) {
         this.isOpen = false;
-        this.arrowCounter = 0;
-      }
-    },
-    onArrowDown() {
-      if (this.arrowCounter < this.results.length) {
-        this.arrowCounter = this.arrowCounter + 1;
-      }
-    },
-    onArrowUp() {
-      if (this.arrowCounter > 0) {
-        this.arrowCounter = this.arrowCounter - 1;
+        this.reset();
       }
     },
     onEnter() {
       this.search = this.results[this.arrowCounter].name;
       this.isOpen = false;
-      this.arrowCounter = 0;
+      this.reset();
       this.$emit("update:modelValue", this.search);
     },
   },
@@ -138,7 +140,7 @@ export default {
 
 .autocomplete-result.is-active,
 .autocomplete-result:hover {
-  background-color: #4aae9b;
+  background-color: #4f85c6;
   color: white;
 }
 
@@ -149,9 +151,7 @@ label {
   font-size: 0.75rem;
   font-weight: 700;
 }
-input,
-select,
-.submitButton {
+input {
   display: block;
   width: 100%;
   border: 1px solid #ddd;
