@@ -18,14 +18,14 @@
 import { ref } from "vue";
 import useFormValidation from "@/modules/useFormValidation";
 export default {
-  setup(props) {
+  setup() {
     const dirty = ref(false);
     const { validateNameField, errors } = useFormValidation();
     const validateInput = (e) => {
       if (!dirty.value && e.type !== "blur") {
         return;
       }
-      validateNameField("username", props.modelValue);
+      validateNameField("username", e.target.value);
       dirty.value = true;
     };
     return { errors, validateInput, dirty };

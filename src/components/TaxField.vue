@@ -6,8 +6,8 @@
       name="tax"
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
-      @keyup="validateInput"
-      @blur="validateInput"
+      @keyup="validateInput($event)"
+      @blur="validateInput($event)"
     />
     <span v-if="errors.tax" class="errorMessage">{{ errors.tax }}</span>
   </div>
@@ -18,8 +18,8 @@ import useFormValidation from "@/modules/useFormValidation";
 export default {
   setup(props) {
     const { validateTaxField, errors } = useFormValidation();
-    const validateInput = () => {
-      validateTaxField("tax", props.modelValue, props.country);
+    const validateInput = (e) => {
+      validateTaxField("tax", e.target.value, props.country);
     };
     return { errors, validateInput };
   },
