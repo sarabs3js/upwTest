@@ -1,7 +1,7 @@
 export const countriesList = [
   { name: "Afghanistan", code: "AF", tax: "^[A-Z]{5}[0-9]{4}[A-Z]{1}$" },
   { name: "USA", code: "USA", tax: "^[0-9]{4}[A-Z]{3}([0-9]{5}|[0-9]{7})$" },
-  { name: "Canada", code: "CD", tax: "^[A-Z]{5}[0-9]{4}[A-Z]{1}$" },
+  { name: "Canada", code: "CD", tax: "^[0-9-A-B-D]{10}[A-Z]{2}$" },
   { name: "Algeria", code: "DZ", tax: "^[A-Z]{5}[0-9]{4}[A-Z]{1}$" },
   { name: "American Samoa", code: "AS", tax: "^[A-Z]{5}[0-9]{4}[A-Z]{1}$" },
   { name: "AndorrA", code: "AD", tax: "^[A-Z]{5}[0-9]{4}[A-Z]{1}$" },
