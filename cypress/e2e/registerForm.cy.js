@@ -2,12 +2,12 @@ describe("Register Form", () => {
   describe("Username field", () => {
     it("Should show error if username not filled", () => {
       cy.visit("http://localhost:3000");
-      cy.get("input[name='username']").type("Sa").clear();
+      cy.get("input[name='username']").focus("").blur();
       cy.contains("The username field is required").should("be.visible");
     });
     it("Should show error if username is less than 2 characters", () => {
       cy.visit("http://localhost:3000");
-      cy.get("input[name='username']").type("Sa");
+      cy.get("input[name='username']").type("Sa").blur();
       cy.contains(
         "The username field must be atleast 3 characters long"
       ).should("be.visible");

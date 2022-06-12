@@ -4,7 +4,7 @@
     <input
       type="text"
       name="username"
-      v-model="input"
+      :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
       @keyup="validateInput"
       @blur="validateInput"
@@ -18,19 +18,21 @@
 import { ref } from "vue";
 import useFormValidation from "@/modules/useFormValidation";
 export default {
-  setup() {
+  setup(props) {
     const dirty = ref(false);
-    const input = ref(null);
     const { validateNameField, errors } = useFormValidation();
     const validateInput = (e) => {
       if (!dirty.value && e.type !== "blur") {
         return;
       }
-      validateNameField("username", input.value);
+      validateNameField("username", props.modelValue);
       dirty.value = true;
     };
-    return { input, errors, validateInput, dirty };
+    return { errors, validateInput, dirty };
   },
+
+  props: ["modelValue"],
+  emits: ["update:modelValue"],
 };
 </script>
 <style scoped>

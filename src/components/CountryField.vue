@@ -6,8 +6,8 @@
       type="text"
       name="country"
       autocomplete="off"
-      @input="onChange"
-      v-model="search"
+      :value="modelValue"
+      @input="onChange($event)"
       @keydown.down="increment"
       @keydown.up="decrement"
       @keydown.enter="onEnter"
@@ -28,7 +28,6 @@
 </template>
 
 <script>
-import { ref } from "vue";
 import useFormValidation from "@/modules/useFormValidation";
 import useAutoComplete from "@/modules/useAutoComplete";
 import useSearchResults from "@/modules/useSearchResults";
@@ -39,19 +38,17 @@ export default {
     };
   },
   setup(props) {
-    let search = ref(null);
     const { counter, increment, decrement, reset } = useAutoComplete();
     const { validateCountryField, errors } = useFormValidation();
     const { results, filterResults } = useSearchResults(props.items);
 
-    const filterResult = () => {
-      filterResults(search.value);
+    const filterResult = (value) => {
+      filterResults(value);
     };
-    const validateInput = () => {
-      validateCountryField("country", search.value, props.items);
+    const validateInput = (value) => {
+      validateCountryField("country", value, props.items);
     };
     return {
-      search,
       errors,
       validateInput,
       counter,
@@ -66,10 +63,13 @@ export default {
   props: {
     items: {
       type: Array,
-      required: false,
-      default: () => [],
+    },
+    modelValue: {
+      type: String,
     },
   },
+
+  emits: ["update:modelValue"],
   mounted() {
     document.addEventListener("click", this.handleClickOutside);
   },
@@ -78,30 +78,27 @@ export default {
   },
   methods: {
     setResult(result) {
-      this.search = result.name;
       this.isOpen = false;
-      this.$emit("update:modelValue", this.search);
-      this.validateInput();
+      this.$emit("update:modelValue", result.name);
+      this.validateInput(result.name);
     },
-    onChange() {
-      this.$emit("update:modelValue", this.search);
-      this.validateInput();
+    onChange(e) {
+      this.$emit("update:modelValue", e.target.value);
+      this.validateInput(e.target.value);
 
-      this.filterResult();
+      this.filterResult(e.target.value);
       this.isOpen = true;
     },
     handleClickOutside(event) {
       if (!this.$el.contains(event.target)) {
         this.isOpen = false;
-        this.validateInput("blur");
         this.reset();
       }
     },
     onEnter() {
-      this.search = this.results[this.arrowCounter].name;
       this.isOpen = false;
       this.reset();
-      this.$emit("update:modelValue", this.search);
+      this.$emit("update:modelValue", this.results[this.counter].name);
     },
   },
 };

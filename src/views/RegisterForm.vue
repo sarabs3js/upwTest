@@ -12,7 +12,7 @@
       v-if="success"
     />
     <UsernameField v-model="fields.username" />
-    <AutoComplete :items="countriesList" v-model="fields.country" />
+    <CountryField :items="countriesList" v-model="fields.country" />
     <TaxField v-model="fields.tax" :country="fields.country" />
     <button
       id="submitButton"
@@ -28,7 +28,7 @@
 
 <script>
 import UsernameField from "@/components/UsernameField.vue";
-import AutoComplete from "@/components/AutoComplete.vue";
+import CountryField from "@/components/CountryField.vue";
 import NotificationMessage from "@/components/NotificationMessage.vue";
 import TaxField from "@/components/TaxField.vue";
 import { reactive, ref } from "vue";
@@ -37,7 +37,7 @@ import useSubmitButton from "@/modules/useSubmitButton";
 import { countriesList } from "@/data";
 import registerForm from "@/network/registerUser";
 export default {
-  components: { UsernameField, TaxField, AutoComplete, NotificationMessage },
+  components: { UsernameField, TaxField, CountryField, NotificationMessage },
   setup() {
     const initialState = {
       username: "",
@@ -45,9 +45,8 @@ export default {
       tax: "",
     };
     const fields = reactive({ ...initialState });
-    let error = ref(false);
-    let success = ref(false);
-    let loading = ref(false);
+    const error = ref(false);
+    const success = ref(false);
 
     function resetForm() {
       Object.assign(fields, initialState);
@@ -62,12 +61,11 @@ export default {
       error,
       success,
       resetForm,
-      loading,
     };
   },
   data() {
     return {
-      countriesList: countriesList,
+      countriesList,
     };
   },
   methods: {
@@ -76,13 +74,11 @@ export default {
       if (!response.status) {
         this.error = true;
         this.success = false;
-        this.loading = false;
         return;
       }
       this.error = false;
       this.success = true;
-      this.loading = false;
-      this.$refs.submitForm.reset();
+      this.resetForm();
     },
   },
 };

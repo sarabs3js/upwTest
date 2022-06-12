@@ -1,6 +1,9 @@
+const errMessage = "Error in registering user";
+const endpoint = "http://localhost:5001"; // THIS CAN BE MOVED TO ENV
+
 export default async (data) => {
   try {
-    const response = await fetch("http://localhost:5001/register", {
+    const response = await fetch(`${endpoint}/register`, {
       method: "POST",
       mode: "cors",
       headers: {
@@ -8,12 +11,11 @@ export default async (data) => {
       },
       body: JSON.stringify(data),
     });
-    if (response.status !== 200) {
-      throw new Error("Error in registering user");
+    if (response.status === 200 || response.status === 201) {
+      return response;
     }
-    console.log("status", response.status);
-    return response;
+    throw new Error(errMessage);
   } catch (e) {
-    return "Error in registering user";
+    return { mesasge: e?.mesasge };
   }
 };

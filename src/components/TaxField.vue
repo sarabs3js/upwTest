@@ -4,7 +4,7 @@
     <input
       type="text"
       name="tax"
-      v-model="tax"
+      :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
       @keyup="validateInput"
       @blur="validateInput"
@@ -14,23 +14,25 @@
 </template>
 
 <script>
-import { ref } from "vue";
 import useFormValidation from "@/modules/useFormValidation";
 export default {
   setup(props) {
-    let tax = ref(null);
     const { validateTaxField, errors } = useFormValidation();
     const validateInput = () => {
-      validateTaxField("tax", tax.value, props.country);
+      validateTaxField("tax", props.modelValue, props.country);
     };
-    return { tax, errors, validateInput };
+    return { errors, validateInput };
   },
 
   props: {
     country: {
       type: String,
     },
+    modelValue: {
+      type: String,
+    },
   },
+  emits: ["update:modelValue"],
 };
 </script>
 <style scoped>
