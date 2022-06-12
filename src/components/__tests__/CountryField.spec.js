@@ -1,12 +1,12 @@
 import { describe, it, expect, vi } from "vitest";
 
 import { mount } from "@vue/test-utils";
-import AutoComplete from "../AutoComplete.vue";
+import CountryField from "../CountryField.vue";
 import { countriesList } from "../../data";
 
-describe("AutoComplete", () => {
+describe("CountryField", () => {
   it("renders properly", () => {
-    const wrapper = mount(AutoComplete, {
+    const wrapper = mount(CountryField, {
       props: { items: countriesList, getUser: vi.fn() },
     });
     const input = wrapper.get("input");
