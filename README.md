@@ -1,7 +1,12 @@
-# upwTest
+# upwork Test
 
 A simple form element for testing.
 
+### Hosted URL
+ 
+
+### Test Cases
+`npm run test:e2e`
 #### Tasks
 
 - [x] Crete a form with 3 given fields

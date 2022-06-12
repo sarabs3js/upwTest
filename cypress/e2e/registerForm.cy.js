@@ -1,26 +1,4 @@
 describe("Register Form", () => {
-  it("Should validate the form without errors", () => {
-    cy.intercept("POST", "/register", { statusCode: 200 });
-    cy.visit("http://localhost:3000");
-    cy.get("input[name='username']").type("Sarab");
-    cy.get("input[name='country']").type("India");
-    cy.get("li").contains("India").click();
-    cy.get("input[name='tax']").type("DVDPS5219L");
-    cy.get("#submitButton").click();
-    cy.get(".errorMessage").should("not.exist");
-    cy.contains("User is registered Successfully!");
-  });
-  it("Should show error if API fails", () => {
-    cy.intercept("POST", "/register", { statusCode: 400 });
-    cy.visit("http://localhost:3000");
-    cy.get("input[name='username']").type("Sarab");
-    cy.get("input[name='country']").type("India");
-    cy.get("li").contains("India").click();
-    cy.get("input[name='tax']").type("DVDPS5219L");
-    cy.get("#submitButton").click();
-    cy.get(".errorMessage").should("not.exist");
-    cy.contains("Error in submitting the form");
-  });
   describe("Username field", () => {
     it("Should show error if username not filled", () => {
       cy.visit("http://localhost:3000");
@@ -30,9 +8,9 @@ describe("Register Form", () => {
     it("Should show error if username is less than 2 characters", () => {
       cy.visit("http://localhost:3000");
       cy.get("input[name='username']").type("Sa");
-      cy.contains("The username field must be atleast 3 characters long").should(
-        "be.visible"
-      );
+      cy.contains(
+        "The username field must be atleast 3 characters long"
+      ).should("be.visible");
     });
   });
   describe("Country field", () => {
@@ -59,6 +37,30 @@ describe("Register Form", () => {
       cy.get("input[name='tax']").type("Sa");
       cy.get("body").click();
       cy.contains("tax number is not valid.").should("be.visible");
+    });
+  });
+  describe("Form Submission", () => {
+    it("Should validate the form without errors", () => {
+      cy.intercept("POST", "/register", { statusCode: 200 });
+      cy.visit("http://localhost:3000");
+      cy.get("input[name='username']").type("Sarab");
+      cy.get("input[name='country']").type("India");
+      cy.get("li").contains("India").click();
+      cy.get("input[name='tax']").type("DVDPS5219L");
+      cy.get("#submitButton").click();
+      cy.get(".errorMessage").should("not.exist");
+      cy.contains("User is registered Successfully!");
+    });
+    it("Should show error if API fails", () => {
+      cy.intercept("POST", "/register", { statusCode: 400 });
+      cy.visit("http://localhost:3000");
+      cy.get("input[name='username']").type("Sarab");
+      cy.get("input[name='country']").type("India");
+      cy.get("li").contains("India").click();
+      cy.get("input[name='tax']").type("DVDPS5219L");
+      cy.get("#submitButton").click();
+      cy.get(".errorMessage").should("not.exist");
+      cy.contains("Error in submitting the form");
     });
   });
 });
