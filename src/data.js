@@ -1,0 +1,18 @@
+export const countriesList = [
+  { name: "Afghanistan", code: "AF", tax: "^[A-Z]{5}[0-9]{4}[A-Z]{1}$" },
+  { name: "USA", code: "USA", tax: "^[0-9]{4}[A-Z]{3}([0-9]{5}|[0-9]{7})$" },
+  { name: "Canada", code: "CD", tax: "^[A-Z]{5}[0-9]{4}[A-Z]{1}$" },
+  { name: "Algeria", code: "DZ", tax: "^[A-Z]{5}[0-9]{4}[A-Z]{1}$" },
+  { name: "American Samoa", code: "AS", tax: "^[A-Z]{5}[0-9]{4}[A-Z]{1}$" },
+  { name: "AndorrA", code: "AD", tax: "^[A-Z]{5}[0-9]{4}[A-Z]{1}$" },
+  { name: "Angola", code: "AO", tax: "^[A-Z]{5}[0-9]{4}[A-Z]{1}$" },
+  { name: "Anguilla", code: "AI", tax: "^[A-Z]{5}[0-9]{4}[A-Z]{1}$" },
+  { name: "Antarctica", code: "AQ", tax: "^[A-Z]{5}[0-9]{4}[A-Z]{1}$" },
+  { name: "India", code: "AG", tax: "^[A-Z]{5}[0-9]{4}[A-Z]{1}$" },
+  { name: "Argentina", code: "AR", tax: "^[A-Z]{5}[0-9]{4}[A-Z]{1}$" },
+  { name: "Armenia", code: "AM", tax: "^[A-Z]{5}[0-9]{4}[A-Z]{1}$" },
+  { name: "Aruba", code: "AW", tax: "^[A-Z]{5}[0-9]{4}[A-Z]{1}$" },
+  { name: "Australia", code: "AU", tax: "^[A-Z]{5}[0-9]{4}[A-Z]{1}$" },
+  { name: "Austria", code: "AT", tax: "^[A-Z]{5}[0-9]{4}[A-Z]{1}$" },
+  { name: "Azerbaijan", code: "AZ", tax: "^[A-Z]{5}[0-9]{4}[A-Z]{1}$" },
+];
