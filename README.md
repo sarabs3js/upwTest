@@ -10,6 +10,11 @@ https://fluffy-cat-121b18.netlify.app
 
 Application is deployed here to quickly review the output.
 
+### Local Setup
+
+- Clone or Download the repo.
+- Run `npm install` inside the directory.
+- Run `npm run dev` to spin up the local dev setup.
 
 ### Test Cases
 `npm run test:e2e` for Testing all the given scenarios
