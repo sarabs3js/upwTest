@@ -1,5 +1,9 @@
 <template>
-  <form @submit.prevent ref="submitForm">
+  <form
+    @submit.prevent
+    ref="submitForm"
+    @keydown.enter="$event.preventDefault()"
+  >
     <h3>Register Form</h3>
     <NotificationMessage
       message="Error in submitting the form"

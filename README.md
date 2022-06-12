@@ -33,6 +33,7 @@ Application is deployed here to quickly review the output.
 - Implement Dirty and touch state to manage showing of error messages in more control way.
 - Some more test cases can be written for AutoComplete component, but due to shortage of time it's not there.
 - However, E2E test cases are covering all of the mentioned conditions.
+- Handled a few edge cases like if user tries to change country after filling tax field.
 
 
 
