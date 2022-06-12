@@ -35,6 +35,12 @@ Application is deployed here to quickly review the output.
 - However, E2E test cases are covering all of the mentioned conditions.
 - For resetting the form I have used a kind of hack at the moment by reseting the form directly. Somehow resetting the reactive state is not reflecting in the child input fields.
 
-https://media.giphy.com/media/TBZEgKryt6NSPXUKBG/giphy.gif
+
+
+
+
+![Alt Text](https://media.giphy.com/media/TBZEgKryt6NSPXUKBG/giphy.gif)
+
+
 
 I hope you will enjoy reviewing the code as much as I enjoyed while writing it ❤️ 
